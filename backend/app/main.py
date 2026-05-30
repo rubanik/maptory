@@ -1,11 +1,10 @@
 import os
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.ext.asyncio import AsyncSession
-from .database import init_db, get_db
+from .database import init_db
 from .routers.auth import router as auth_router
 
 app = FastAPI(title="Maptory")
@@ -42,8 +41,8 @@ async def health():
 @app.get("/{full_path:path}")
 async def serve_spa(full_path: str):
     if full_path.startswith("api/"):
-        return None
+        raise HTTPException(status_code=404, detail="Not found")
     index_file = STATIC_DIR / "index.html"
     if index_file.exists():
         return FileResponse(str(index_file))
-    return FileResponse(str(index_file))
+    raise HTTPException(status_code=404, detail="Frontend not built")
