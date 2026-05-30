@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Install CA certificate for on-prem registry (Alpine)
 COPY frontend/root.crt /usr/local/share/ca-certificates/root.crt
-RUN update-ca-trust extract
+RUN apk add --no-cache ca-certificates && update-ca-certificates
 
 # Configure npm for on-prem registry
 RUN npm set registry https://infra-reg.myizhora.net/repository/npm-proxy/ \
@@ -20,13 +20,14 @@ FROM docker-mirror.pmrudc.com/library/python:3.13-slim
 WORKDIR /app
 
 # Install CA certificate for on-prem pypi
-COPY backend/root.crt /usr/local/share/ca-certificates/root.crt
-RUN update-ca-certificates
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
     gcc \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
+
+COPY backend/root.crt /usr/local/share/ca-certificates/root.crt
+RUN update-ca-certificates
 
 # Configure pip for on-prem index
 RUN pip config set global.index-url https://infra-reg.myizhora.net/repository/pypi-proxy/simple \
