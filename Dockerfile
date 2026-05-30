@@ -2,9 +2,9 @@
 FROM docker-mirror.pmrudc.com/library/node:22-alpine AS frontend
 WORKDIR /app
 
-# Install CA certificate for on-prem registry
+# Install CA certificate for on-prem registry (Alpine)
 COPY frontend/root.crt /usr/local/share/ca-certificates/root.crt
-RUN update-ca-certificates
+RUN update-ca-trust extract
 
 # Configure npm for on-prem registry
 RUN npm set registry https://infra-reg.myizhora.net/repository/npm-proxy/ \
