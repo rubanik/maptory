@@ -11,7 +11,7 @@ RUN npm set registry https://infra-reg.myizhora.net/repository/npm-proxy/ \
     && npm config set cafile="/usr/local/share/ca-certificates/root.crt"
 
 COPY frontend/package.json frontend/package-lock.json ./
-RUN npm ci
+RUN npm install
 COPY frontend/ .
 RUN npm run build
 
