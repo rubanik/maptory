@@ -4,13 +4,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..database import get_db
 from ..models import Point, Layer
 from ..schemas import PointCreate, PointResponse
-from ..auth import get_current_user
 import os
 import uuid
 
 router = APIRouter(prefix="/api/maps/{map_id}/layers/{layer_id}/points", tags=["points"])
 
-UPLOADS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), "uploads", "photos")
+UPLOADS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "uploads", "photos")
 
 
 @router.get("/", response_model=list[PointResponse])

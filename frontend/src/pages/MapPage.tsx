@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import { mapsApi, layersApi, pointsApi } from "../api/hooks";
 import { TransformationContainer } from "react-zoom-pan-pinch";
 

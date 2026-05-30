@@ -28,15 +28,16 @@ app.include_router(points_router)
 STATIC_DIR = Path(__file__).parent.parent / "static"
 UPLOADS_DIR = Path(__file__).parent.parent / "uploads"
 
+if STATIC_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+app.mount("/uploads/maps", StaticFiles(directory=str(UPLOADS_DIR / "maps")), name="uploads_maps")
+app.mount("/uploads/photos", StaticFiles(directory=str(UPLOADS_DIR / "photos")), name="uploads_photos")
+
 
 @app.on_event("startup")
 async def startup():
     os.makedirs(str(UPLOADS_DIR / "maps"), exist_ok=True)
     os.makedirs(str(UPLOADS_DIR / "photos"), exist_ok=True)
-    if STATIC_DIR.exists():
-        app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
-    app.mount("/uploads/maps", StaticFiles(directory=str(UPLOADS_DIR / "maps")), name="uploads_maps")
-    app.mount("/uploads/photos", StaticFiles(directory=str(UPLOADS_DIR / "photos")), name="uploads_photos")
     await init_db()
 
 

@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
 from ..database import get_db
 from ..models import Map, User
 from ..schemas import MapCreate, MapResponse
@@ -11,7 +10,7 @@ import uuid
 
 router = APIRouter(prefix="/api/maps", tags=["maps"])
 
-UPLOADS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), "uploads", "maps")
+UPLOADS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "uploads", "maps")
 
 
 @router.get("/", response_model=list[MapResponse])
