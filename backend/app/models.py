@@ -1,5 +1,6 @@
 from datetime import datetime
-from sqlalchemy import String, Boolean, DateTime, ForeignKey
+from typing import Any
+from sqlalchemy import String, Boolean, DateTime, ForeignKey, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .database import Base
 
@@ -37,7 +38,7 @@ class Layer(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(200))
     map_id: Mapped[int] = mapped_column(ForeignKey("maps.id"))
-    fields: Mapped[list[dict]] = mapped_column(default=list)
+    fields: Mapped[list[dict]] = mapped_column(JSON, default=list)
     is_visible: Mapped[bool] = mapped_column(Boolean, default=True)
 
     map: Mapped["Map"] = relationship(back_populates="layers")
@@ -51,8 +52,8 @@ class Point(Base):
     x: Mapped[float] = mapped_column()
     y: Mapped[float] = mapped_column()
     layer_id: Mapped[int] = mapped_column(ForeignKey("layers.id"))
-    data: Mapped[dict] = mapped_column(default=dict)
-    photos: Mapped[list[str]] = mapped_column(default=list)
+    data: Mapped[dict] = mapped_column(JSON, default=dict)
+    photos: Mapped[list[str]] = mapped_column(JSON, default=list)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     layer: Mapped["Layer"] = relationship(back_populates="points")
