@@ -1,5 +1,5 @@
 # Stage 1: Build frontend
-FROM node:22-alpine AS frontend
+FROM docker-mirror.pmrudc.com/library/node:22-alpine AS frontend
 WORKDIR /app
 
 # Install CA certificate for on-prem registry
@@ -16,7 +16,7 @@ COPY frontend/ .
 RUN npm run build
 
 # Stage 2: Python backend
-FROM python:3.13-slim
+FROM docker-mirror.pmrudc.com/library/python:3.13-slim
 WORKDIR /app
 
 # Install CA certificate for on-prem pypi
