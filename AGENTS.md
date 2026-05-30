@@ -11,7 +11,7 @@
 ### Запуск на сервере (Docker)
 ```bash
 docker compose up --build -d
-# Приложение доступно на http://<server-ip>:8000
+# Приложение доступно на http://<server-ip>:8007
 ```
 
 ### Локальная разработка (без Docker)

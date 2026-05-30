@@ -40,4 +40,4 @@ COPY --from=frontend /app/dist ./static/
 RUN mkdir -p ./uploads/maps ./uploads/photos
 
 EXPOSE 8000
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8007"]
